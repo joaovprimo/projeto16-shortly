@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import { v4 as uuid } from "uuid";
 import connection from "../database/database.js";
 
 export async function postSingUp(req, res){
