@@ -1,9 +1,8 @@
-import connection from "../database/database.js";
 import { urlSchema } from "../schemas/urlSchema.js";
 
 export async function urlMiddleware(req, res, next){
 const {url} = req.body;
-    const validation = singUpSchema.validate({
+    const validation = urlSchema.validate({
         url
 },{abortEarly: false});
 

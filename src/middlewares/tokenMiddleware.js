@@ -25,6 +25,7 @@ if(user.rowsCount === 0){
 }
 
 res.locals.user = user;
+next();
 }catch(err){
     return res.status(500).send(err.message);
 }
