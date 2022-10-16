@@ -21,7 +21,7 @@ const user = await connection.query(`
 SELECT * FROM users WHERE id = $1`, [session.userId]);
 
 if(user.rowsCount === 0){
-    return res.status(401).send("User not found");
+    return res.status(404).send("User not found");
 }
 
 res.locals.user = user;
