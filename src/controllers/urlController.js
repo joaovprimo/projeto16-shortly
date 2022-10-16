@@ -70,3 +70,34 @@ export async function getUrlOpen(req, res){
     }
 
 }
+
+export async function deleteUrl(req, res){
+    const {id} = req.params;
+    const user = res.locals.user.rows[0];
+
+    console.log(id)
+    console.log(user)
+    try{
+        const checkUrl = await connection.query(`
+        SELECT * FROM urls WHERE id = $1;
+        `,[id]);
+
+        if(checkUrl.rowCount === 0){
+            return res.status(404).send(`There is not URL with id ${id}`)
+        }
+
+        const checkUrlUser = checkUrl.rows[0].userId;
+        console.log(checkUrlUser);
+        if(user.id !== checkUrlUser){
+            return res.status(401).send("Action not allowed, the user does not match with the URL's owner");
+        }
+        await connection.query(`
+        DELETE FROM urls WHERE id = $1;
+        `, [id]);
+
+        return res.status(204).send("Deleted");
+
+    }catch(err){
+        return res.status(500).send(err.message);
+    }
+}
